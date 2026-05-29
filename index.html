@@ -7,26 +7,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; overflow-x: hidden; background-color: #0f172a; }
+        /* TASA Explorer Typography Integration */
+        @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@300;400;600;700&display=swap');
+        
+        body { 
+            font-family: 'TASA Explorer', sans-serif; 
+            overflow-x: hidden; 
+            background-color: #0f172a; 
+        }
 
-        /* Initial Pixel Cover */
+        /* Refined Small Square Pixel Overlay */
         #reveal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             display: grid;
-            grid-template-columns: repeat(20, 1fr);
-            grid-template-rows: repeat(20, 1fr);
+            /* Increased to 40 columns for smaller, sharper squares */
+            grid-template-columns: repeat(40, 1fr);
+            grid-template-rows: repeat(40, 1fr);
             z-index: 100;
             pointer-events: none;
         }
 
         .reveal-pixel {
             background-color: #0f172a;
-            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+            /* Maintaining a perfect square aspect ratio */
+            aspect-ratio: 1 / 1;
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
         }
 
-        /* Hero Container */
+        /* Hero Container & Performance Background */
         .hero-container {
             position: relative;
             height: 100vh;
@@ -40,12 +49,11 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
-                        url('sky-cloud-bg.png'); 
+                        url('blue-cloud-bg.png'); 
             background-size: cover;
             background-position: center;
             z-index: 1;
-            /* Subtle zoom movement remains to keep the sky alive */
-            animation: slowZoom 15s infinite alternate ease-in-out;
+            animation: slowZoom 10s infinite alternate ease-in-out;
         }
 
         @keyframes slowZoom {
@@ -68,7 +76,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 scroll-smooth">
 
-    <!-- The Pixel Dissolve Overlay -->
+    <!-- The Refined Pixel Dissolve Overlay -->
     <div id="reveal-overlay"></div>
 
     <!-- Navigation -->
@@ -105,17 +113,17 @@
     <section id="work" class="py-24 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-2 text-slate-800">Proven Expertise. Real Results.</h2>
-            <p class="text-slate-500 mb-12">A curated look at how we help brands build authority.</p>
+            <p class="text-slate-500 mb-12">A curated selection of our work for industry leaders and boutiques alike.</p>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8">
-                    <span class="text-blue-600 font-bold text-sm uppercase tracking-widest">Enterprise Innovation</span>
+                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8 hover:border-blue-200 transition">
+                    <span class="text-blue-600 font-bold text-sm uppercase tracking-widest text-xs">Enterprise Innovation</span>
                     <h3 class="text-2xl font-bold mt-2">Sony Mobile, Canon & Shiseido</h3>
-                    <p class="text-slate-600 mt-4">Strategic campaign architectures and high-impact digital asset production.</p>
+                    <p class="text-slate-600 mt-4 leading-relaxed"> Strategic campaign architectures, high-impact asset production, and bespoke app development.</p>
                 </div>
-                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8">
-                    <span class="text-blue-600 font-bold text-sm uppercase tracking-widest">E-Commerce Strategy</span>
-                    <h3 class="text-2xl font-bold mt-2">Team Green & Nihon Kara</h3>
-                    <p class="text-slate-600 mt-4">Shopify maintenance and conversion-focused media buy execution.</p>
+                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8 hover:border-blue-200 transition">
+                    <span class="text-blue-600 font-bold text-sm uppercase tracking-widest text-xs">E-Commerce Strategy</span>
+                    <h3 class="text-2xl font-bold mt-2">Team Green & nihon-kara.com</h3>
+                    <p class="text-slate-600 mt-4 leading-relaxed"> Scalable Shopify ecosystems, conversion-focused maintenance, and targeted global strategy.</p>
                 </div>
             </div>
         </div>
@@ -126,20 +134,29 @@
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div>
                 <h2 class="text-4xl font-bold mb-6">Technical Mastery. Personal Execution.</h2>
-                <p class="text-slate-400 mb-6 leading-relaxed">Cloudalite Digital Inc. was established in Canada in 2021, bringing high-tier enterprise expertise to local and global partners.</p>
-                <p class="text-slate-400 mb-8 leading-relaxed">Formerly ANAC Solutions Limited in Hong Kong, we managed massive digital deployments for iconic global brands.</p>
+                <p class="text-slate-400 mb-6 leading-relaxed">
+                    Cloudalite Digital Inc. was established in Canada in 2021, bringing decades of collective experience in turning complex technical challenges into simple, elegant digital solutions.
+                </p>
+                <p class="text-slate-400 mb-8 leading-relaxed">
+                    Formerly known as ANAC Solutions Limited in Hong Kong, we spent years architecting high-performance digital ecosystems for some of the world's most recognized brands.
+                </p>
+                <div class="flex items-center gap-4 text-blue-400">
+                    <i data-lucide="map-pin"></i>
+                    <span>Proudly rooted in Canada</span>
+                </div>
             </div>
             <div class="bg-slate-800 p-10 rounded-3xl border border-slate-700">
-                <h4 class="text-xl font-bold mb-4">Our Mission</h4>
-                <p class="text-slate-300 italic">"Delivering cutting-edge digital solutions globally, empowering businesses through innovative technology."</p>
+                <h4 class="text-xl font-bold mb-4">Our Philosophy</h4>
+                <p class="text-slate-300 italic">"Whether we are supporting a local business or a larger corporation, our focus remains building high-performance platforms that allow our clients to focus on what they do best."</p>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer id="contact" class="bg-white border-t border-slate-200 py-16 px-6 text-center">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-bold mb-4">Ready to bring your vision into the cloud?</h2>
-            <p class="text-slate-500 mb-8">Based in Canada, serving partners globally.</p>
+            <p class="text-slate-500 mb-8">A Canadian digital agency providing best-in-class web development and strategy for brands ready to scale.</p>
             <a href="mailto:hello@cloudalite.com" class="text-blue-600 font-bold text-xl hover:underline">hello@cloudalite.com</a>
             <div class="mt-12 text-slate-400 text-sm">
                 <p>&copy; 2026 Cloudalite Digital Inc. | www.cloudalite.com</p>
@@ -148,9 +165,10 @@
     </footer>
 
     <script>
-        // Create Dissolve Animation
+        // Enhanced Small Square Pixel Dissolve
         const overlay = document.getElementById('reveal-overlay');
-        const totalPixels = 400; // 20x20 grid
+        // Increased number of pixels to 1600 (40x40) for a finer, high-tech look
+        const totalPixels = 1600; 
 
         for (let i = 0; i < totalPixels; i++) {
             const pixel = document.createElement('div');
@@ -162,19 +180,18 @@
             const pixels = document.querySelectorAll('.reveal-pixel');
             const heroContent = document.getElementById('hero-content');
             
-            // Randomize pixel dissolve
             pixels.forEach((p) => {
-                const delay = Math.random() * 1000; 
+                // Increased randomization window for a more organic data-dissolve feel
+                const delay = Math.random() * 1500; 
                 setTimeout(() => {
                     p.style.opacity = '0';
-                    p.style.transform = 'scale(0.8)';
+                    p.style.transform = 'scale(0.7)'; // Slight shrink as they vanish
                 }, delay);
             });
 
-            // Reveal hero text
             setTimeout(() => {
                 heroContent.classList.add('visible');
-            }, 1200);
+            }, 1000);
         });
 
         lucide.createIcons();
