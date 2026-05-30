@@ -1,200 +1,409 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudalite Digital Inc. | Transforming Vision into Reality</title>
+    <title>Cloudalite Digital Inc. | Seamless Digital Reality</title>
+    
+    <!-- Tailwind CSS for Layout -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        /* TASA Explorer Typography Integration */
-        @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@300;400;600;700&display=swap');
+        /* Typography: TASA Explorer */
+        @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@400;600;700&display=swap');
         
-        body { 
-            font-family: 'TASA Explorer', sans-serif; 
-            overflow-x: hidden; 
-            background-color: #0f172a; 
+        body {
+            font-family: 'TASA Explorer', sans-serif;
+            background-color: #FAFAFA; 
+            color: #111111; 
+            overflow-x: hidden;
+            cursor: none; 
         }
 
-        /* Refined Small Square Pixel Overlay */
-        #reveal-overlay {
+        /* Custom Interactive Cursor */
+        .cursor-dot,
+        .cursor-outline {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            display: grid;
-            /* Increased to 40 columns for smaller, sharper squares */
-            grid-template-columns: repeat(40, 1fr);
-            grid-template-rows: repeat(40, 1fr);
-            z-index: 100;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
             pointer-events: none;
         }
-
-        .reveal-pixel {
-            background-color: #0f172a;
-            /* Maintaining a perfect square aspect ratio */
-            aspect-ratio: 1 / 1;
-            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00AEEF; 
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(17, 17, 17, 0.3);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
 
-        /* Hero Container & Performance Background */
-        .hero-container {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-bg {
+        /* Hero Background with Continuous Slow Zoom */
+        .hero-bg-container {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), 
-                        url('blue-cloud-bg.png'); 
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-            animation: slowZoom 10s infinite alternate ease-in-out;
+            inset: -5%; /* Added negative inset to prevent white edges during scale */
+            background: linear-gradient(to bottom, rgba(250, 250, 250, 0.15) 0%, rgba(250, 250, 250, 1) 100%), url('blue-cloud-bg.png') center/cover no-repeat;
+            z-index: 0;
+            /* 12-second punchy zoom effect scaling to 1.15 */
+            animation: slowZoom 12s ease-in-out infinite alternate;
         }
 
         @keyframes slowZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
         }
 
-        .content-overlay { 
-            z-index: 10; 
-            position: relative; 
-            text-align: center; 
-            color: white; 
-            opacity: 0; 
-            transform: translateY(20px);
-            transition: opacity 2s ease-in-out 0.5s, transform 2s ease-in-out 0.5s;
+        /* Ultra-Smooth Left-to-Right Text Reveal (No Boxes) */
+        .headline-wipe {
+            clip-path: inset(0 100% 0 0); 
+            animation: textSweep 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.2s;
+        }
+        
+        @keyframes textSweep {
+            0% { clip-path: inset(0 100% 0 0); }
+            100% { clip-path: inset(0 0 0 0); }
         }
 
-        .content-overlay.visible { opacity: 1; transform: translateY(0); }
+        /* Continuous Logo Pixel Dots Animation */
+        .pixel-dot {
+            position: absolute;
+            opacity: 0;
+            z-index: 30; /* Sit above the text */
+            animation-name: continuousPop;
+            animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes continuousPop {
+            0% {
+                opacity: 0;
+                transform: scale(0) translateY(15px) rotate(-15deg);
+            }
+            15% {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotate(0deg);
+            }
+            85% {
+                opacity: 1;
+                transform: scale(1) translateY(-15px) rotate(15deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) translateY(-25px) rotate(30deg);
+            }
+        }
+
+        /* Cinematic Scroll-Reveal Animation for other elements */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Asymmetrical Grid Utilities */
+        .offset-down {
+            margin-top: 5rem;
+        }
+
+        /* Custom Colors */
+        .text-electric {
+            color: #00AEEF;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 scroll-smooth">
+<body class="antialiased selection:bg-blue-100 selection:text-blue-900">
 
-    <!-- The Refined Pixel Dissolve Overlay -->
-    <div id="reveal-overlay"></div>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <div class="flex items-center">
-                <img src="Pixel-Cloud-Logo.png" alt="Cloudalite Digital Inc. Logo" class="h-16 w-auto">
+    <nav class="fixed w-full z-40 top-0 transition-all duration-300 backdrop-blur-md bg-white/70 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="hover-trigger">
+                <img src="Pixel-Cloud-Logo.png" alt="Cloudalite Digital Inc." class="h-10">
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-widest uppercase text-gray-700">
+                <a href="#work" class="hover:text-black hover-trigger transition-colors">Work</a>
+                <a href="#about" class="hover:text-black hover-trigger transition-colors">About</a>
+                <a href="#services" class="hover:text-black hover-trigger transition-colors">Services</a>
             </div>
-            <div class="hidden md:flex gap-8 font-medium text-slate-600">
-                <a href="#work" class="hover:text-blue-600 transition font-semibold">Work</a>
-                <a href="#about" class="hover:text-blue-600 transition font-semibold">About</a>
-                <a href="#services" class="hover:text-blue-600 transition font-semibold">Services</a>
-            </div>
-            <a href="#contact" class="bg-slate-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-600 transition">Let's Talk</a>
+            <a href="#contact" class="hover-trigger px-6 py-2 border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors rounded-full text-sm font-bold uppercase tracking-wide">Let's chat</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-container">
-        <div class="hero-bg"></div>
-        <div class="content-overlay px-6 max-w-4xl" id="hero-content">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">Transforming Vision into Seamless Digital Reality.</h1>
-            <p class="text-lg md:text-2xl text-slate-100 mb-10 font-light leading-relaxed">
+    <section class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pt-20">
+        <!-- Zooming Background Container -->
+        <div class="hero-bg-container"></div>
+        
+        <div class="max-w-6xl mx-auto text-center z-10 relative">
+            
+            <!-- Headline Wrapper with Continuous Logo Pixels -->
+            <div class="relative inline-block">
+                
+                <!-- Continuously Popping Logo Pixels (Left Side) -->
+                <!-- Electric Blue -->
+                <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 24px; height: 24px; bottom: 25%; left: -50px; animation-duration: 4.2s; animation-delay: 0.1s;"></div>
+                <!-- Bright Orange -->
+                <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 18px; height: 18px; top: 15%; left: -30px; animation-duration: 3.5s; animation-delay: 1.2s;"></div>
+                <!-- Green -->
+                <div class="pixel-dot shadow-sm" style="background-color: #39B54A; width: 12px; height: 12px; top: 40%; left: -10px; animation-duration: 5s; animation-delay: 0.5s;"></div>
+                
+                <!-- Continuously Popping Logo Pixels (Right Side) -->
+                <!-- Ruby Red -->
+                <div class="pixel-dot shadow-sm" style="background-color: #ED1C24; width: 14px; height: 14px; top: 30%; right: -30px; animation-duration: 4.8s; animation-delay: 1.8s;"></div>
+                <!-- Electric Blue -->
+                <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 16px; height: 16px; bottom: 40%; right: -20px; animation-duration: 3.9s; animation-delay: 0.7s;"></div>
+                <!-- Bright Orange -->
+                <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 10px; height: 10px; bottom: 20%; right: -40px; animation-duration: 4.5s; animation-delay: 2.2s;"></div>
+
+                <!-- Vector Wiping Headline -->
+                <h1 class="headline-wipe text-6xl md:text-8xl lg:text-9xl font-bold leading-none mb-8 text-gray-900 tracking-tight" style="text-shadow: 0 4px 30px rgba(255,255,255,0.8);">
+                    Transforming Vision <br> into <span class="text-electric italic">Digital Reality</span>
+                </h1>
+            </div>
+            
+            <p class="reveal text-xl md:text-2xl text-gray-800 max-w-3xl mx-auto font-medium leading-relaxed mb-12" style="transition-delay: 800ms; text-shadow: 0 2px 15px rgba(255,255,255,0.9);">
                 Expertly crafted digital experiences that bridge the gap between ambitious ideas and measurable results for businesses ready to lead.
             </p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#work" class="bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl transition">Explore Our Work</a>
-                <a href="#contact" class="bg-transparent border-2 border-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-slate-900 transition">Start a Conversation</a>
+            <div class="reveal flex flex-col sm:flex-row justify-center gap-6" style="transition-delay: 1000ms;">
+                <a href="#work" class="hover-trigger px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-colors uppercase tracking-widest text-sm shadow-lg">Explore Our Work</a>
+                <a href="#contact" class="hover-trigger px-10 py-5 border border-gray-900 text-gray-900 font-bold bg-white/70 backdrop-blur-sm rounded-full hover:bg-white transition-colors uppercase tracking-widest text-sm">Start a Conversation</a>
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Work Section -->
-    <section id="work" class="py-24 px-6 bg-white">
+    <!-- Asymmetrical Portfolio / Work Section -->
+    <section id="work" class="py-32 px-6 bg-[#FAFAFA] relative z-20">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-2 text-slate-800">Proven Expertise. Real Results.</h2>
-            <p class="text-slate-500 mb-12">A curated selection of our work for industry leaders and boutiques alike.</p>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8 hover:border-blue-200 transition">
-                    <span class="text-blue-600 font-bold text-sm uppercase tracking-widest text-xs">Enterprise Innovation</span>
-                    <h3 class="text-2xl font-bold mt-2">Sony Mobile, Canon & Shiseido</h3>
-                    <p class="text-slate-600 mt-4 leading-relaxed"> Strategic campaign architectures, high-impact asset production, and bespoke app development.</p>
+            <div class="reveal mb-24">
+                <h2 class="text-sm font-bold text-electric tracking-widest uppercase mb-4">// Selected Works</h2>
+                <h3 class="text-5xl md:text-7xl font-bold text-gray-900 leading-tight">Proven Expertise.<br>Real Results.</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="reveal md:col-span-7 group hover-trigger cursor-pointer">
+                    <div class="overflow-hidden bg-gray-100 aspect-[4/3] rounded-xl relative shadow-sm">
+                        <div class="w-full h-full bg-gradient-to-br from-blue-50 to-gray-200 group-hover:scale-105 transition-transform duration-700"></div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="text-3xl font-bold text-gray-900">Enterprise Creative</h4>
+                        <p class="text-electric mt-2 text-xl font-semibold">Sony Mobile, Canon & Shiseido</p>
+                        <p class="text-lg text-gray-500 mt-3 font-light leading-relaxed">Strategic campaign architectures, high-impact banner production, and interactive app development.</p>
+                    </div>
                 </div>
-                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8 hover:border-blue-200 transition">
-                    <span class="text-blue-600 font-bold text-sm uppercase tracking-widest text-xs">E-Commerce Strategy</span>
-                    <h3 class="text-2xl font-bold mt-2">Team Green & nihon-kara.com</h3>
-                    <p class="text-slate-600 mt-4 leading-relaxed"> Scalable Shopify ecosystems, conversion-focused maintenance, and targeted global strategy.</p>
+
+                <div class="reveal md:col-span-5 offset-down group hover-trigger cursor-pointer">
+                    <div class="overflow-hidden bg-gray-100 aspect-[3/4] rounded-xl relative shadow-sm">
+                        <div class="w-full h-full bg-gradient-to-tl from-gray-200 to-gray-50 group-hover:scale-105 transition-transform duration-700"></div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="text-3xl font-bold text-gray-900">E-Commerce Strategy</h4>
+                        <p class="text-electric mt-2 text-xl font-semibold">Team Green (Jigzle) & nihon-kara.com</p>
+                        <p class="text-lg text-gray-500 mt-3 font-light leading-relaxed">Comprehensive Shopify setup, ongoing store maintenance, and performance-driven media buying.</p>
+                    </div>
+                </div>
+
+                <div class="reveal md:col-span-5 mt-16 group hover-trigger cursor-pointer">
+                    <div class="overflow-hidden bg-gray-100 aspect-square rounded-xl relative shadow-sm">
+                        <div class="w-full h-full bg-gradient-to-tr from-blue-50 to-gray-200 group-hover:scale-105 transition-transform duration-700"></div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="text-3xl font-bold text-gray-900">Hospitality & Lifestyle</h4>
+                        <p class="text-electric mt-2 text-xl font-semibold">Wake Concept Hotel & Design District HK</p>
+                        <p class="text-lg text-gray-500 mt-3 font-light leading-relaxed">Bespoke website design, responsive development, and dedicated CMS maintenance.</p>
+                    </div>
+                </div>
+                
+                <div class="reveal md:col-span-7 offset-down group hover-trigger cursor-pointer">
+                    <div class="overflow-hidden bg-gray-100 aspect-[16/9] rounded-xl relative shadow-sm">
+                        <div class="w-full h-full bg-gradient-to-bl from-gray-200 to-white group-hover:scale-105 transition-transform duration-700"></div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="text-3xl font-bold text-gray-900">Local Engagement</h4>
+                        <p class="text-electric mt-2 text-xl font-semibold">South Coast Summer Fiesta</p>
+                        <p class="text-lg text-gray-500 mt-3 font-light leading-relaxed">Omni-channel promotional assets including poster and flyer engineering.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 px-6 bg-slate-900 text-white">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div>
-                <h2 class="text-4xl font-bold mb-6">Technical Mastery. Personal Execution.</h2>
-                <p class="text-slate-400 mb-6 leading-relaxed">
-                    Cloudalite Digital Inc. was established in Canada in 2021, bringing decades of collective experience in turning complex technical challenges into simple, elegant digital solutions.
-                </p>
-                <p class="text-slate-400 mb-8 leading-relaxed">
-                    Formerly known as ANAC Solutions Limited in Hong Kong, we spent years architecting high-performance digital ecosystems for some of the world's most recognized brands.
-                </p>
-                <div class="flex items-center gap-4 text-blue-400">
-                    <i data-lucide="map-pin"></i>
-                    <span>Proudly rooted in Canada</span>
-                </div>
+    <section id="about" class="py-32 px-6 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
+            <div class="reveal md:w-1/2">
+                <h2 class="text-sm font-bold text-electric tracking-widest uppercase mb-4">// Our Story</h2>
+                <h3 class="text-5xl md:text-7xl font-bold leading-tight mb-8 text-gray-900">Technical Mastery.<br>Personal Execution.</h3>
             </div>
-            <div class="bg-slate-800 p-10 rounded-3xl border border-slate-700">
-                <h4 class="text-xl font-bold mb-4">Our Philosophy</h4>
-                <p class="text-slate-300 italic">"Whether we are supporting a local business or a larger corporation, our focus remains building high-performance platforms that allow our clients to focus on what they do best."</p>
+            <div class="md:w-1/2 space-y-8">
+                <p class="reveal text-2xl text-gray-600 font-light leading-relaxed">
+                    Established in Canada in 2021, Cloudalite Digital Inc. brings decades of collective experience in turning complex technical challenges into simple, elegant digital solutions. Formerly known as ANAC Solutions Limited in Hong Kong, our journey began by managing high-stakes digital projects for world-renowned brands.
+                </p>
+                <p class="reveal text-xl text-gray-500 font-light leading-relaxed" style="transition-delay: 200ms;">
+                    Whether we are supporting a local business or a larger corporation, our focus remains the same: building high-performance platforms that allow our clients to focus on what they do best. We combine the technical depth of an established studio with the dedicated, hands-on approach of a local partner.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="bg-white border-t border-slate-200 py-16 px-6 text-center">
+    <!-- Services Section -->
+    <section id="services" class="py-32 px-6 bg-[#FAFAFA] border-t border-gray-100">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4">Ready to bring your vision into the cloud?</h2>
-            <p class="text-slate-500 mb-8">A Canadian digital agency providing best-in-class web development and strategy for brands ready to scale.</p>
-            <a href="mailto:hello@cloudalite.com" class="text-blue-600 font-bold text-xl hover:underline">hello@cloudalite.com</a>
-            <div class="mt-12 text-slate-400 text-sm">
-                <p>&copy; 2026 Cloudalite Digital Inc. | www.cloudalite.com</p>
+            <div class="reveal mb-24 md:w-2/3">
+                <h2 class="text-sm font-bold text-electric tracking-widest uppercase mb-4">// Capabilities</h2>
+                <h3 class="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">Digital Solutions Engineered for Growth.</h3>
             </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12 pt-8">
+                <div class="reveal group hover-trigger cursor-pointer flex gap-6">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-electric transition-colors duration-300">
+                        <i data-lucide="code-2" class="w-8 h-8 text-electric group-hover:text-white transition-colors duration-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold mb-3 text-gray-900">Web Development</h4>
+                        <p class="text-xl text-gray-500 font-light leading-relaxed">Crafting high-speed, responsive environments that serve as the foundation for your digital authority.</p>
+                    </div>
+                </div>
+
+                <div class="reveal group hover-trigger cursor-pointer flex gap-6" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-electric transition-colors duration-300">
+                        <i data-lucide="shopping-cart" class="w-8 h-8 text-electric group-hover:text-white transition-colors duration-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold mb-3 text-gray-900">E-Commerce Mastery</h4>
+                        <p class="text-xl text-gray-500 font-light leading-relaxed">Architecting seamless Shopify experiences designed to turn traffic into loyal customers.</p>
+                    </div>
+                </div>
+
+                <div class="reveal group hover-trigger cursor-pointer flex gap-6" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-electric transition-colors duration-300">
+                        <i data-lucide="smartphone" class="w-8 h-8 text-electric group-hover:text-white transition-colors duration-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold mb-3 text-gray-900">Mobile Innovation</h4>
+                        <p class="text-xl text-gray-500 font-light leading-relaxed">Developing intuitive applications that keep your brand connected to your audience on any device.</p>
+                    </div>
+                </div>
+
+                <div class="reveal group hover-trigger cursor-pointer flex gap-6" style="transition-delay: 300ms;">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-electric transition-colors duration-300">
+                        <i data-lucide="lightbulb" class="w-8 h-8 text-electric group-hover:text-white transition-colors duration-300"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold mb-3 text-gray-900">Strategic Consulting</h4>
+                        <p class="text-xl text-gray-500 font-light leading-relaxed">Providing the technical roadmap and clarity required to navigate digital transformation with confidence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Footer / Contact -->
+    <footer id="contact" class="bg-white py-32 px-6 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+            <div class="reveal">
+                <h3 class="text-5xl md:text-7xl font-bold leading-tight mb-8 text-gray-900">Ready to bring your vision to life?</h3>
+                <p class="text-2xl text-gray-500 font-light mb-10 leading-relaxed">Cloudalite Digital Inc. is a Canadian digital agency providing best-in-class web development and online strategy for brands ready to scale.</p>
+                <a href="mailto:hello@cloudalite.ca" class="text-4xl font-bold text-electric hover-trigger hover:text-blue-700 transition-colors">hello@cloudalite.ca</a>
+            </div>
+            
+            <div class="reveal bg-[#FAFAFA] p-10 rounded-2xl shadow-sm border border-gray-100">
+                <form class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <input type="text" placeholder="Name" class="w-full bg-transparent border-b border-gray-300 py-3 px-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-electric transition-colors hover-trigger text-lg">
+                        <input type="email" placeholder="Business Email" class="w-full bg-transparent border-b border-gray-300 py-3 px-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-electric transition-colors hover-trigger text-lg">
+                    </div>
+                    <select class="w-full bg-transparent border-b border-gray-300 py-3 px-2 text-gray-500 focus:outline-none focus:border-electric transition-colors hover-trigger cursor-pointer appearance-none text-lg">
+                        <option value="" disabled selected>Service Interest</option>
+                        <option value="web" class="text-black">Web Development</option>
+                        <option value="ecomm" class="text-black">E-Commerce</option>
+                        <option value="app" class="text-black">App Development</option>
+                        <option value="consulting" class="text-black">Consulting</option>
+                    </select>
+                    <textarea placeholder="Project Vision" rows="3" class="w-full bg-transparent border-b border-gray-300 py-3 px-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-electric transition-colors hover-trigger resize-none text-lg"></textarea>
+                    <button type="submit" class="hover-trigger w-full px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-colors uppercase tracking-widest text-sm mt-4">Launch Project</button>
+                </form>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-24 pt-10 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 font-semibold tracking-wide">
+            <p>Proudly rooted in Canada. © 2026 Cloudalite Digital Inc.</p>
+            <p>www.cloudalite.com</p>
         </div>
     </footer>
 
+    <!-- Scripts for Interactivity -->
     <script>
-        // Enhanced Small Square Pixel Dissolve
-        const overlay = document.getElementById('reveal-overlay');
-        // Increased number of pixels to 1600 (40x40) for a finer, high-tech look
-        const totalPixels = 1600; 
+        // Initialize Icons
+        lucide.createIcons();
 
-        for (let i = 0; i < totalPixels; i++) {
-            const pixel = document.createElement('div');
-            pixel.className = 'reveal-pixel';
-            overlay.appendChild(pixel);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const pixels = document.querySelectorAll('.reveal-pixel');
-            const heroContent = document.getElementById('hero-content');
+        // Custom Cursor Logic
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
             
-            pixels.forEach((p) => {
-                // Increased randomization window for a more organic data-dissolve feel
-                const delay = Math.random() * 1500; 
-                setTimeout(() => {
-                    p.style.opacity = '0';
-                    p.style.transform = 'scale(0.7)'; // Slight shrink as they vanish
-                }, delay);
-            });
-
-            setTimeout(() => {
-                heroContent.classList.add('visible');
-            }, 1000);
+            dot.style.transform = `translate(${posX}px, ${posY}px)`;
+            
+            outline.animate({
+                transform: `translate(${posX}px, ${posY}px)`
+            }, { duration: 500, fill: "forwards" });
         });
 
-        lucide.createIcons();
+        const triggers = document.querySelectorAll('.hover-trigger, a, button, select, input, textarea');
+        triggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => {
+                outline.style.width = '60px';
+                outline.style.height = '60px';
+                outline.style.backgroundColor = 'rgba(0, 174, 239, 0.05)';
+                outline.style.borderColor = 'rgba(0, 174, 239, 0.5)';
+            });
+            trigger.addEventListener('mouseleave', () => {
+                outline.style.width = '40px';
+                outline.style.height = '40px';
+                outline.style.backgroundColor = 'transparent';
+                outline.style.borderColor = 'rgba(17, 17, 17, 0.3)';
+            });
+        });
+
+        // Cinematic Scroll Reveal via Intersection Observer
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
     </script>
 </body>
 </html>
