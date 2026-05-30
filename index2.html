@@ -17,10 +17,10 @@
         
         body {
             font-family: 'TASA Explorer', sans-serif;
-            background-color: #FAFAFA; /* Bright, clean off-white */
-            color: #111111; /* Sharp dark slate for high readability */
+            background-color: #FAFAFA; 
+            color: #111111; 
             overflow-x: hidden;
-            cursor: none; /* Hide default cursor */
+            cursor: none; 
         }
 
         /* Custom Interactive Cursor */
@@ -37,7 +37,7 @@
         .cursor-dot {
             width: 8px;
             height: 8px;
-            background-color: #00AEEF; /* Cloudalite Electric Blue */
+            background-color: #00AEEF; 
         }
         .cursor-outline {
             width: 40px;
@@ -46,33 +46,63 @@
             transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
 
-        /* High-Density Pixel Dissolve Overlay (Corrected & Transparent) */
-        #pixel-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 5000;
-            display: grid;
-            pointer-events: none; 
-        }
-        .pixel-block {
-            background-color: #FAFAFA; /* The pixels themselves stay white */
-            /* Faster CSS transition for a snappier reveal */
-            transition: opacity 0.3s ease, transform 0.3s ease; 
-        }
-        .pixel-block.dissolve {
-            opacity: 0;
-            transform: scale(0.5); /* Shrink effect on dissolve */
-        }
-
-        /* Hero Background - Adjusted for brilliant blue visibility */
-        .hero-bg {
-            /* The gradient starts sheer at the top to show the blue cloud, fading to white at the bottom */
+        /* Hero Background with Continuous Slow Zoom */
+        .hero-bg-container {
+            position: absolute;
+            inset: -5%; /* Added negative inset to prevent white edges during scale */
             background: linear-gradient(to bottom, rgba(250, 250, 250, 0.15) 0%, rgba(250, 250, 250, 1) 100%), url('blue-cloud-bg.png') center/cover no-repeat;
-            background-attachment: fixed; /* Parallax effect */
-            position: relative;
+            z-index: 0;
+            /* 12-second punchy zoom effect scaling to 1.15 */
+            animation: slowZoom 12s ease-in-out infinite alternate;
         }
 
-        /* Cinematic Scroll-Reveal Animation */
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        /* Ultra-Smooth Left-to-Right Text Reveal (No Boxes) */
+        .headline-wipe {
+            clip-path: inset(0 100% 0 0); 
+            animation: textSweep 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 0.2s;
+        }
+        
+        @keyframes textSweep {
+            0% { clip-path: inset(0 100% 0 0); }
+            100% { clip-path: inset(0 0 0 0); }
+        }
+
+        /* Continuous Logo Pixel Dots Animation */
+        .pixel-dot {
+            position: absolute;
+            opacity: 0;
+            z-index: 30; /* Sit above the text */
+            animation-name: continuousPop;
+            animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes continuousPop {
+            0% {
+                opacity: 0;
+                transform: scale(0) translateY(15px) rotate(-15deg);
+            }
+            15% {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotate(0deg);
+            }
+            85% {
+                opacity: 1;
+                transform: scale(1) translateY(-15px) rotate(15deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) translateY(-25px) rotate(30deg);
+            }
+        }
+
+        /* Cinematic Scroll-Reveal Animation for other elements */
         .reveal {
             opacity: 0;
             transform: translateY(60px);
@@ -100,9 +130,6 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- Intro Dynamic Square Pixel Overlay -->
-    <div id="pixel-overlay"></div>
-
     <!-- Navigation -->
     <nav class="fixed w-full z-40 top-0 transition-all duration-300 backdrop-blur-md bg-white/70 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -119,16 +146,42 @@
         </div>
     </nav>
 
-    <!-- Hero Section (Blue Cloud BG) -->
-    <section class="hero-bg min-h-screen flex items-center justify-center px-6 overflow-hidden pt-20">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pt-20">
+        <!-- Zooming Background Container -->
+        <div class="hero-bg-container"></div>
+        
         <div class="max-w-6xl mx-auto text-center z-10 relative">
-            <h1 class="reveal text-6xl md:text-8xl lg:text-9xl font-bold leading-none mb-8 text-gray-900 tracking-tight" style="text-shadow: 0 4px 30px rgba(255,255,255,0.8);">
-                Transforming Vision <br> into <span class="text-electric italic">Digital Reality.</span>
-            </h1>
-            <p class="reveal text-xl md:text-2xl text-gray-800 max-w-3xl mx-auto font-medium leading-relaxed mb-12" style="transition-delay: 200ms; text-shadow: 0 2px 15px rgba(255,255,255,0.9);">
+            
+            <!-- Headline Wrapper with Continuous Logo Pixels -->
+            <div class="relative inline-block">
+                
+                <!-- Continuously Popping Logo Pixels (Left Side) -->
+                <!-- Electric Blue -->
+                <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 24px; height: 24px; bottom: 25%; left: -50px; animation-duration: 4.2s; animation-delay: 0.1s;"></div>
+                <!-- Bright Orange -->
+                <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 18px; height: 18px; top: 15%; left: -30px; animation-duration: 3.5s; animation-delay: 1.2s;"></div>
+                <!-- Green -->
+                <div class="pixel-dot shadow-sm" style="background-color: #39B54A; width: 12px; height: 12px; top: 40%; left: -10px; animation-duration: 5s; animation-delay: 0.5s;"></div>
+                
+                <!-- Continuously Popping Logo Pixels (Right Side) -->
+                <!-- Ruby Red -->
+                <div class="pixel-dot shadow-sm" style="background-color: #ED1C24; width: 14px; height: 14px; top: 30%; right: -30px; animation-duration: 4.8s; animation-delay: 1.8s;"></div>
+                <!-- Electric Blue -->
+                <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 16px; height: 16px; bottom: 40%; right: -20px; animation-duration: 3.9s; animation-delay: 0.7s;"></div>
+                <!-- Bright Orange -->
+                <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 10px; height: 10px; bottom: 20%; right: -40px; animation-duration: 4.5s; animation-delay: 2.2s;"></div>
+
+                <!-- Vector Wiping Headline -->
+                <h1 class="headline-wipe text-6xl md:text-8xl lg:text-9xl font-bold leading-none mb-8 text-gray-900 tracking-tight" style="text-shadow: 0 4px 30px rgba(255,255,255,0.8);">
+                    Transforming Vision <br> into <span class="text-electric italic">Digital Reality.</span>
+                </h1>
+            </div>
+            
+            <p class="reveal text-xl md:text-2xl text-gray-800 max-w-3xl mx-auto font-medium leading-relaxed mb-12" style="transition-delay: 800ms; text-shadow: 0 2px 15px rgba(255,255,255,0.9);">
                 Expertly crafted digital experiences that bridge the gap between ambitious ideas and measurable results for businesses ready to lead.
             </p>
-            <div class="reveal flex flex-col sm:flex-row justify-center gap-6" style="transition-delay: 400ms;">
+            <div class="reveal flex flex-col sm:flex-row justify-center gap-6" style="transition-delay: 1000ms;">
                 <a href="#work" class="hover-trigger px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-colors uppercase tracking-widest text-sm shadow-lg">Explore Our Work</a>
                 <a href="#contact" class="hover-trigger px-10 py-5 border border-gray-900 text-gray-900 font-bold bg-white/70 backdrop-blur-sm rounded-full hover:bg-white transition-colors uppercase tracking-widest text-sm">Start a Conversation</a>
             </div>
@@ -143,9 +196,7 @@
                 <h3 class="text-5xl md:text-7xl font-bold text-gray-900 leading-tight">Proven Expertise.<br>Real Results.</h3>
             </div>
 
-            <!-- Asymmetrical Grid -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
-                <!-- Item 1 -->
                 <div class="reveal md:col-span-7 group hover-trigger cursor-pointer">
                     <div class="overflow-hidden bg-gray-100 aspect-[4/3] rounded-xl relative shadow-sm">
                         <div class="w-full h-full bg-gradient-to-br from-blue-50 to-gray-200 group-hover:scale-105 transition-transform duration-700"></div>
@@ -157,7 +208,6 @@
                     </div>
                 </div>
 
-                <!-- Item 2 (Offset) -->
                 <div class="reveal md:col-span-5 offset-down group hover-trigger cursor-pointer">
                     <div class="overflow-hidden bg-gray-100 aspect-[3/4] rounded-xl relative shadow-sm">
                         <div class="w-full h-full bg-gradient-to-tl from-gray-200 to-gray-50 group-hover:scale-105 transition-transform duration-700"></div>
@@ -169,7 +219,6 @@
                     </div>
                 </div>
 
-                <!-- Item 3 -->
                 <div class="reveal md:col-span-5 mt-16 group hover-trigger cursor-pointer">
                     <div class="overflow-hidden bg-gray-100 aspect-square rounded-xl relative shadow-sm">
                         <div class="w-full h-full bg-gradient-to-tr from-blue-50 to-gray-200 group-hover:scale-105 transition-transform duration-700"></div>
@@ -181,7 +230,6 @@
                     </div>
                 </div>
                 
-                <!-- Item 4 (Offset) -->
                 <div class="reveal md:col-span-7 offset-down group hover-trigger cursor-pointer">
                     <div class="overflow-hidden bg-gray-100 aspect-[16/9] rounded-xl relative shadow-sm">
                         <div class="w-full h-full bg-gradient-to-bl from-gray-200 to-white group-hover:scale-105 transition-transform duration-700"></div>
@@ -304,7 +352,7 @@
         // Initialize Icons
         lucide.createIcons();
 
-        // 1. Custom Cursor Logic
+        // Custom Cursor Logic
         const dot = document.querySelector('.cursor-dot');
         const outline = document.querySelector('.cursor-outline');
         
@@ -319,7 +367,6 @@
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Custom Cursor Hover states
         const triggers = document.querySelectorAll('.hover-trigger, a, button, select, input, textarea');
         triggers.forEach(trigger => {
             trigger.addEventListener('mouseenter', () => {
@@ -336,47 +383,7 @@
             });
         });
 
-        // 2. High-Speed Square Pixel Dissolve Reveal
-        document.addEventListener('DOMContentLoaded', () => {
-            const overlay = document.getElementById('pixel-overlay');
-            
-            // Set the target pixel size (small squares)
-            const pixelSize = 30; 
-            
-            // Calculate how many columns and rows are needed to fill the screen
-            const cols = Math.ceil(window.innerWidth / pixelSize);
-            const rows = Math.ceil(window.innerHeight / pixelSize);
-            const totalPixels = cols * rows;
-
-            // Apply grid templates dynamically
-            overlay.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-            overlay.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-
-            for (let i = 0; i < totalPixels; i++) {
-                const pixel = document.createElement('div');
-                pixel.classList.add('pixel-block');
-                overlay.appendChild(pixel);
-            }
-
-            const pixels = document.querySelectorAll('.pixel-block');
-            
-            // Fast dissolve logic
-            setTimeout(() => {
-                pixels.forEach((pixel) => {
-                    // Random delay reduced from 800ms to 300ms for rapid sweeping effect
-                    setTimeout(() => {
-                        pixel.classList.add('dissolve');
-                    }, Math.random() * 150); 
-                });
-
-                // Remove the grid from DOM faster (700ms instead of 1500ms)
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 350);
-            }, 50); // Starts almost immediately (100ms)
-        });
-
-        // 3. Cinematic Scroll Reveal via Intersection Observer
+        // Cinematic Scroll Reveal via Intersection Observer
         const revealElements = document.querySelectorAll('.reveal');
         
         const revealOptions = {
