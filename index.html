@@ -142,7 +142,12 @@
                 <a href="#about" class="hover:text-black hover-trigger transition-colors">About</a>
                 <a href="#services" class="hover:text-black hover-trigger transition-colors">Services</a>
             </div>
-            <a href="#contact" class="hover-trigger px-6 py-2 border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors rounded-full text-sm font-bold uppercase tracking-wide">Let's talk ↘</a>
+            <!-- Elegant Underline Sweep Nav Link -->
+            <a href="#contact" class="hover-trigger group relative flex items-center gap-2 text-gray-900 font-bold uppercase tracking-widest text-sm">
+                <span>Let's talk</span>
+                <span class="transform group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-300">↘</span>
+                <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-electric transition-all duration-300 group-hover:w-full"></span>
+            </a>
         </div>
     </nav>
 
@@ -157,19 +162,13 @@
             <div class="relative inline-block">
                 
                 <!-- Continuously Popping Logo Pixels (Left Side) -->
-                <!-- Electric Blue -->
                 <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 24px; height: 24px; bottom: 25%; left: -50px; animation-duration: 4.2s; animation-delay: 0.1s;"></div>
-                <!-- Bright Orange -->
                 <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 18px; height: 18px; top: 15%; left: -30px; animation-duration: 3.5s; animation-delay: 1.2s;"></div>
-                <!-- Green -->
                 <div class="pixel-dot shadow-sm" style="background-color: #39B54A; width: 12px; height: 12px; top: 40%; left: -10px; animation-duration: 5s; animation-delay: 0.5s;"></div>
                 
                 <!-- Continuously Popping Logo Pixels (Right Side) -->
-                <!-- Ruby Red -->
                 <div class="pixel-dot shadow-sm" style="background-color: #ED1C24; width: 14px; height: 14px; top: 30%; right: -30px; animation-duration: 4.8s; animation-delay: 1.8s;"></div>
-                <!-- Electric Blue -->
                 <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 16px; height: 16px; bottom: 40%; right: -20px; animation-duration: 3.9s; animation-delay: 0.7s;"></div>
-                <!-- Bright Orange -->
                 <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 10px; height: 10px; bottom: 20%; right: -40px; animation-duration: 4.5s; animation-delay: 2.2s;"></div>
 
                 <!-- Vector Wiping Headline -->
@@ -182,8 +181,18 @@
                 Expertly crafted digital experiences that bridge the gap between ambitious ideas and measurable results for businesses ready to lead.
             </p>
             <div class="reveal flex flex-col sm:flex-row justify-center gap-6" style="transition-delay: 1000ms;">
-                <a href="#work" class="hover-trigger px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-colors uppercase tracking-widest text-sm shadow-lg">All cases here +</a>
-                <a href="#contact" class="hover-trigger px-10 py-5 border border-gray-900 text-gray-900 font-bold bg-white/70 backdrop-blur-sm rounded-full hover:bg-white transition-colors uppercase tracking-widest text-sm">Project in mind? Reach out! ↘</a>
+                
+                <!-- Creative Sharp Edge Button 1 (Spinning +) -->
+                <a href="#work" class="hover-trigger group flex items-center justify-center gap-3 px-10 py-5 bg-gray-900 text-white font-bold uppercase tracking-widest text-sm rounded-none shadow-lg transition-all duration-300 hover:bg-electric">
+                    <span>All cases here</span>
+                    <span class="text-electric group-hover:text-white transform group-hover:rotate-90 transition-all duration-300 text-lg">+</span>
+                </a>
+                
+                <!-- Creative Sharp Edge Button 2 (Diagonal Sliding Arrow) -->
+                <a href="#contact" class="hover-trigger group flex items-center justify-center gap-3 px-10 py-5 border-2 border-gray-900 text-gray-900 font-bold bg-white/70 backdrop-blur-sm uppercase tracking-widest text-sm rounded-none transition-all duration-300 hover:bg-gray-900 hover:text-white">
+                    <span>Project in mind? Reach out!</span>
+                    <span class="transform group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-300">↘</span>
+                </a>
             </div>
         </div>
     </section>
@@ -337,7 +346,12 @@
                         <option value="consulting" class="text-black">Consulting</option>
                     </select>
                     <textarea placeholder="Project Vision" rows="3" class="w-full bg-transparent border-b border-gray-300 py-3 px-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-electric transition-colors hover-trigger resize-none text-lg"></textarea>
-                    <button type="submit" class="hover-trigger w-full px-10 py-5 bg-gray-900 text-white font-bold rounded-full hover:bg-black transition-colors uppercase tracking-widest text-sm mt-4">Let's collaborate and make great stuff</button>
+                    
+                    <!-- Creative Sharp Edge Footer Button (Up/Right Arrow Slide) -->
+                    <button type="submit" class="hover-trigger group flex items-center justify-center gap-3 w-full px-10 py-5 border-2 border-gray-900 bg-gray-900 text-white font-bold uppercase tracking-widest text-sm rounded-none mt-4 transition-all duration-300 hover:bg-transparent hover:text-gray-900">
+                        <span>Let's collaborate and make great stuff</span>
+                        <span class="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-lg">↗</span>
+                    </button>
                 </form>
             </div>
         </div>
