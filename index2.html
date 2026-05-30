@@ -46,19 +46,18 @@
             transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
 
-        /* High-Density Pixel Dissolve Overlay */
+        /* High-Density Pixel Dissolve Overlay (Corrected & Transparent) */
         #pixel-overlay {
             position: fixed;
             inset: 0;
             z-index: 5000;
             display: grid;
-            background-color: #FAFAFA;
-            pointer-events: none;
+            pointer-events: none; 
         }
         .pixel-block {
-            background-color: #FAFAFA;
-            /* No fixed aspect ratio here; JavaScript will handle perfect squares */
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            background-color: #FAFAFA; /* The pixels themselves stay white */
+            /* Faster CSS transition for a snappier reveal */
+            transition: opacity 0.3s ease, transform 0.3s ease; 
         }
         .pixel-block.dissolve {
             opacity: 0;
@@ -337,7 +336,7 @@
             });
         });
 
-        // 2. Dynamic Square Pixel Dissolve Reveal
+        // 2. High-Speed Square Pixel Dissolve Reveal
         document.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('pixel-overlay');
             
@@ -361,19 +360,20 @@
 
             const pixels = document.querySelectorAll('.pixel-block');
             
-            // Randomly dissolve pixels to reveal the blue cloud bg
+            // Fast dissolve logic
             setTimeout(() => {
                 pixels.forEach((pixel) => {
+                    // Random delay reduced from 800ms to 300ms for rapid sweeping effect
                     setTimeout(() => {
                         pixel.classList.add('dissolve');
-                    }, Math.random() * 800); 
+                    }, Math.random() * 150); 
                 });
 
-                // Remove the grid from DOM when done
+                // Remove the grid from DOM faster (700ms instead of 1500ms)
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                }, 1500);
-            }, 200);
+                }, 350);
+            }, 50); // Starts almost immediately (100ms)
         });
 
         // 3. Cinematic Scroll Reveal via Intersection Observer
