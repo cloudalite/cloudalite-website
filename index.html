@@ -13,7 +13,7 @@
 
     <style>
         /* Typography: TASA Explorer */
-        @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@300;400;600;700&display=swap');
         
         body {
             font-family: 'TASA Explorer', sans-serif;
@@ -49,11 +49,9 @@
         /* Hero Background with Continuous Slow Zoom */
         .hero-bg-container {
             position: absolute;
-            inset: -5%; /* Added negative inset to prevent white edges during scale */
-            /* Top 50% is completely transparent so the blue sky is at maximum brightness */
+            inset: -5%; 
             background: linear-gradient(to bottom, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0) 50%, rgba(250, 250, 250, 1) 100%), url('blue-cloud-bg.png') center/cover no-repeat;
             z-index: 0;
-            /* 12-second punchy zoom effect scaling to 1.15 */
             animation: slowZoom 12s ease-in-out infinite alternate;
         }
 
@@ -62,7 +60,7 @@
             100% { transform: scale(1.15); }
         }
 
-        /* Ultra-Smooth Left-to-Right Text Reveal (No Boxes) */
+        /* Ultra-Smooth Left-to-Right Text Reveal */
         .headline-wipe {
             clip-path: inset(0 100% 0 0); 
             animation: textSweep 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -74,36 +72,24 @@
             100% { clip-path: inset(0 0 0 0); }
         }
 
-        /* Continuous Logo Pixel Dots Animation */
+        /* Continuous Logo Pixel Dots Animation (Around the text) */
         .pixel-dot {
             position: absolute;
             opacity: 0;
-            z-index: 30; /* Sit above the text */
+            z-index: 30; 
             animation-name: continuousPop;
             animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
             animation-iteration-count: infinite;
         }
 
         @keyframes continuousPop {
-            0% {
-                opacity: 0;
-                transform: scale(0) translateY(15px) rotate(-15deg);
-            }
-            15% {
-                opacity: 1;
-                transform: scale(1) translateY(0) rotate(0deg);
-            }
-            85% {
-                opacity: 1;
-                transform: scale(1) translateY(-15px) rotate(15deg);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0) translateY(-25px) rotate(30deg);
-            }
+            0% { opacity: 0; transform: scale(0) translateY(15px) rotate(-15deg); }
+            15% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
+            85% { opacity: 1; transform: scale(1) translateY(-15px) rotate(15deg); }
+            100% { opacity: 0; transform: scale(0) translateY(-25px) rotate(30deg); }
         }
 
-        /* Cinematic Scroll-Reveal Animation for other elements */
+        /* Cinematic Scroll-Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(60px);
@@ -114,15 +100,8 @@
             transform: translateY(0);
         }
 
-        /* Asymmetrical Grid Utilities */
-        .offset-down {
-            margin-top: 5rem;
-        }
-
-        /* Custom Colors */
-        .text-electric {
-            color: #00AEEF;
-        }
+        .offset-down { margin-top: 5rem; }
+        .text-electric { color: #00AEEF; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-100 selection:text-blue-900">
@@ -134,14 +113,18 @@
     <!-- Navigation -->
     <nav class="fixed w-full z-40 top-0 transition-all duration-300 backdrop-blur-md bg-white/70 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="hover-trigger">
-                <img src="Pixel-Cloud-Logo.png" alt="Cloudalite Digital Inc." class="h-10">
+            
+            <!-- Clean Horizontal Logo -->
+            <a href="#" class="hover-trigger flex items-center">
+                <img src="Pixel-Cloud-Logo-h.png" alt="Cloudalite Digital Inc." class="h-10 w-auto">
             </a>
+
             <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-widest uppercase text-gray-700">
                 <a href="#work" class="hover:text-black hover-trigger transition-colors">Work</a>
                 <a href="#about" class="hover:text-black hover-trigger transition-colors">About</a>
                 <a href="#services" class="hover:text-black hover-trigger transition-colors">Services</a>
             </div>
+            
             <!-- Elegant Underline Sweep Nav Link -->
             <a href="#contact" class="hover-trigger group relative flex items-center gap-2 text-gray-900 font-bold uppercase tracking-widest text-sm">
                 <span>Let's talk</span>
@@ -171,7 +154,7 @@
                 <div class="pixel-dot shadow-sm" style="background-color: #00AEEF; width: 16px; height: 16px; bottom: 40%; right: -20px; animation-duration: 3.9s; animation-delay: 0.7s;"></div>
                 <div class="pixel-dot shadow-sm" style="background-color: #F7931E; width: 10px; height: 10px; bottom: 20%; right: -40px; animation-duration: 4.5s; animation-delay: 2.2s;"></div>
 
-                <!-- Vector Wiping Headline -->
+                <!-- Smooth Vector Wiping Headline -->
                 <h1 class="headline-wipe text-6xl md:text-8xl lg:text-9xl font-bold leading-none mb-8 text-gray-900 tracking-tight" style="text-shadow: 0 4px 30px rgba(255,255,255,0.8);">
                     Transforming Vision <br> into <span class="text-electric italic">Digital Reality</span>
                 </h1>
@@ -181,14 +164,13 @@
                 Expertly crafted digital experiences that bridge the gap between ambitious ideas and measurable results for businesses ready to lead.
             </p>
             <div class="reveal flex flex-col sm:flex-row justify-center gap-6" style="transition-delay: 1000ms;">
-                
-                <!-- Creative Sharp Edge Button 1 (Spinning +) -->
+                <!-- Creative Sharp Edge Button 1 -->
                 <a href="#work" class="hover-trigger group flex items-center justify-center gap-3 px-10 py-5 bg-gray-900 text-white font-bold uppercase tracking-widest text-sm rounded-none shadow-lg transition-all duration-300 hover:bg-electric">
                     <span>All cases here</span>
                     <span class="text-electric group-hover:text-white transform group-hover:rotate-90 transition-all duration-300 text-lg">+</span>
                 </a>
                 
-                <!-- Creative Sharp Edge Button 2 (Diagonal Sliding Arrow) -->
+                <!-- Creative Sharp Edge Button 2 -->
                 <a href="#contact" class="hover-trigger group flex items-center justify-center gap-3 px-10 py-5 border-2 border-gray-900 text-gray-900 font-bold bg-white/70 backdrop-blur-sm uppercase tracking-widest text-sm rounded-none transition-all duration-300 hover:bg-gray-900 hover:text-white">
                     <span>Project in mind? Reach out!</span>
                     <span class="transform group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-300">↘</span>
@@ -347,7 +329,6 @@
                     </select>
                     <textarea placeholder="Project Vision" rows="3" class="w-full bg-transparent border-b border-gray-300 py-3 px-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-electric transition-colors hover-trigger resize-none text-lg"></textarea>
                     
-                    <!-- Creative Sharp Edge Footer Button (Up/Right Arrow Slide) -->
                     <button type="submit" class="hover-trigger group flex items-center justify-center gap-3 w-full px-10 py-5 border-2 border-gray-900 bg-gray-900 text-white font-bold uppercase tracking-widest text-sm rounded-none mt-4 transition-all duration-300 hover:bg-transparent hover:text-gray-900">
                         <span>Let's collaborate and make great stuff</span>
                         <span class="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 text-lg">↗</span>
